@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cold Email Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      padding: 1rem;
+      background-color: #f4f6fa;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 1rem;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    th, td {
+      padding: 14px 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f3f7;
+      font-weight: 600;
+    }
+    .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: flex-end;
+    }
+    button {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background-color: #4338ca;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 2rem;
+      border: none;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+    }
+    .modal-content h2 {
+      margin-top: 0;
+    }
+    .modal-content input {
+      padding: 0.75rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .modal-content .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .modal-content .modal-footer button {
+      margin-left: 0.5rem;
+    }
+    @media (max-width: 600px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 97%;
+      }
+      thead tr {
+        display: none;
+      }
+      tr {
+        margin-bottom: 1rem;
+        border-radius: 12px;
+        background-color: #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        padding: 10px;
+      }
+      td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        border: none;
+        border-bottom: 1px solid #eee;
+      }
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📬 Cold Email Dashboard</h1>
+
+    <div class="actions">
+      <button onclick="openModal()">+ Create New Entry</button>
+    </div>
+
+    <table id="email-table">
+      <thead>
+        <tr>
+          <th>Recruiter</th>
+          <th>Email</th>
+          <th>Company</th>
+          <th>Role</th>
+          <th>Applied?</th>
+          <th>Followed Up?</th>
+          <th>Created At</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        <!-- Data will be injected here by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <div id="createModal" class="modal">
+    <div class="modal-content">
+      <h2>Add New Entry</h2>
+      <form id="create-form">
+        <input name="recruiter_name" placeholder="Recruiter Name" required />
+        <input name="recruiter_email" placeholder="Recruiter Email" type="email" required />
+        <input name="company_name" placeholder="Company Name" required />
+        <input name="company_role" placeholder="Role" required />
+        <div class="modal-footer">
+          <button type="button" onclick="closeModal()" style="background-color: #ccc; color: #000;">Cancel</button>
+          <button type="submit">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    function openModal() {
+      document.getElementById('createModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('createModal').style.display = 'none';
+    }
+
+    async function loadData() {
+      const res = await fetch('/get-full-list');
+      const data = await res.json();
+      const tbody = document.getElementById('table-body');
+      tbody.innerHTML = data.map(row => `
+        <tr>
+          <td data-label="Recruiter">${row.recruiter_name}</td>
+          <td data-label="Email">${row.recruiter_email}</td>
+          <td data-label="Company">${row.company_name}</td>
+          <td data-label="Role">${row.company_role}</td>
+          <td data-label="Applied?">${row.isApplied ? '✅' : '❌'}</td>
+          <td data-label="Followed Up?">${row.isFollowBackSent ? '✅' : '❌'}</td>
+          <td data-label="Created At">${new Date(row.createdAt).toLocaleDateString()}</td>
+        </tr>
+      `).join('');
+    }
+
+    document.getElementById('create-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const body = {
+        recruiter_name: form.recruiter_name.value,
+        recruiter_email: form.recruiter_email.value,
+        company_name: form.company_name.value,
+        company_role: form.company_role.value
+      };
+      await fetch('/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      form.reset();
+      closeModal();
+      loadData();
+    });
+
+    window.onclick = function(event) {
+      if (event.target === document.getElementById('createModal')) {
+        closeModal();
+      }
+    };
+
+    loadData();
+  </script>
+</body>
+</html>

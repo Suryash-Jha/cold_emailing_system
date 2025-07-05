@@ -17,8 +17,8 @@ const coldEmailListSchema = new mongoose.Schema({
     recruiter_email: { type: String, required: true },
     company_name: { type: String, required: true },
     company_role: { type: String, required: true },
-    isApplied: { type: Boolean, required: true },
-    isFollowBackSent: { type: Boolean, required: true },
+    isApplied: { type: Boolean, default: false },
+    isFollowBackSent: { type: Boolean, default: false },
     appliedMailSentOn: { type: Date, default: null },
     followBackSentOn: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now }
@@ -34,7 +34,7 @@ const insertToMongo = async (data) => {
     }
 }
 const fetchFullList = async () => {
-    const data = await ColdEmailCollection.find()
+    const data = await ColdEmailCollection.find().sort({_id:-1})
     return data
 }
 const generateEmail = (name, company, role, isFollowUp = false) => {
@@ -85,17 +85,17 @@ const sendMail = async (data) => {
 
 
 
-const finalFunction = async () => {
-    console.log(process.env.MONGO_URL, '---> ')
-    const finalData = await fetchFullList()
-    for (let data of finalData) {
-        await sendMail(data)
-        console.log('--->', data, '90')
-    }
-    // console.log(finalData)
-}
+// const finalFunction = async () => {
+//     console.log(process.env.MONGO_URL, '---> ')
+//     const finalData = await fetchFullList()
+//     for (let data of finalData) {
+//         await sendMail(data)
+//         console.log('--->', data, '90')
+//     }
+//     // console.log(finalData)
+// }
 
-finalFunction()
+// finalFunction()
 // fetch List From Mongo
 
 // connect mail server
@@ -105,4 +105,6 @@ finalFunction()
 // If already done send follow back template
 
 // Update Mongo db
+
+module.exports={insertToMongo, fetchFullList, ColdEmailCollection}
 
