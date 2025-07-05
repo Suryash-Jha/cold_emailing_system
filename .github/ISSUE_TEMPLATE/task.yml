@@ -1,0 +1,21 @@
+name: "📋 Task"
+description: "Log a simple task, refactor, or cleanup item"
+title: '[Task] '
+labels: [task]
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: "📝 Describe the Task"
+      description: What needs to be done?
+      placeholder: Add unit tests for component X...
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: "🧠 Additional Notes"
+      description: Add context, links, or related issues if needed.
+      placeholder: See also: #42
+    validations:
+      required: false

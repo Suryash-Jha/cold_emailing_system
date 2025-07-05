@@ -1,0 +1,29 @@
+name: "🧪 Feature Request"
+description: "Suggest a new feature or functionality"
+title: '[Feature] '
+labels: [feature]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: "🔍 Feature Description"
+      description: Clearly describe the feature you’re proposing.
+      placeholder: I’d like to have...
+    validations:
+      required: true
+  - type: textarea
+    id: usecase
+    attributes:
+      label: "📚 Use Case"
+      description: What is the problem this feature solves?
+      placeholder: When I try to do ____, I find it difficult because...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: "⚙️ Alternatives"
+      description: Have you considered any alternatives?
+      placeholder: Another approach could be...
+    validations:
+      required: false

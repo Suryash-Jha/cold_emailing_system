@@ -1,0 +1,3 @@
+[2025-07-05T06:30:00.612Z] 📬 Starting scheduled email check...
+[2025-07-05T06:30:04.197Z] 🔁 Follow-up sent to Rahul Kapoor (OpenText)
+[2025-07-05T06:30:04.458Z] ✔️ Mail sent to Priya Mehta (Zensar)

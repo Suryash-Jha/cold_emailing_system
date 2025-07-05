@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+- name: "\U0001F4EC Ask a Question"
+  url: https://github.com/suryash-jha/modern_portfolio/discussions
+  about: Use GitHub Discussions for help or general questions.

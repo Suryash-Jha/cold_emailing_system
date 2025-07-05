@@ -1,0 +1,46 @@
+name: "\U0001F41E Bug Report"
+description: "Report something that isn\u2019t working"
+title: '[Bug] '
+labels:
+- bug
+body:
+- type: textarea
+  id: description
+  attributes:
+    label: "\u2757 What\u2019s the issue?"
+    description: Clearly describe the bug or feature request.
+    placeholder: Something isn't working...
+  validations:
+    required: true
+- type: textarea
+  id: steps
+  attributes:
+    label: "\U0001F504 Steps to Reproduce (if applicable)"
+    description: '1. Do this
+
+      2. Do that
+
+      3. Error shows up'
+    placeholder: '1. ...
+
+      2. ...
+
+      3. ...'
+  validations:
+    required: false
+- type: textarea
+  id: expected
+  attributes:
+    label: "\u2705 Expected vs Actual"
+    description: What did you expect to happen, and what actually happened?
+    placeholder: Expected result vs actual result
+  validations:
+    required: false
+- type: textarea
+  id: attachments
+  attributes:
+    label: "\U0001F4F8 Screenshots / Logs (Optional)"
+    description: Attach screenshots or logs here if needed.
+    placeholder: Drop files or paste logs here
+  validations:
+    required: false

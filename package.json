@@ -1,0 +1,21 @@
+{
+  "name": "cold-emailer",
+  "version": "1.0.0",
+  "description": "Cold emailer with cron and Express server",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.16.1",
+    "node-cron": "^3.0.2",
+    "nodemailer": "^6.9.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

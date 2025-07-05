@@ -1,0 +1,21 @@
+name: "📂 Documentation Update"
+description: "Report missing or outdated documentation"
+title: '[Docs] '
+labels: [documentation]
+body:
+  - type: textarea
+    id: docs_area
+    attributes:
+      label: "📚 Affected Area"
+      description: What part of the docs needs work?
+      placeholder: The setup instructions are unclear...
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: "✍️ Suggested Update"
+      description: What would you like to see changed?
+      placeholder: I suggest rewording this section to...
+    validations:
+      required: false
